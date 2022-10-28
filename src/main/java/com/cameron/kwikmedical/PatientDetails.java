@@ -4,6 +4,15 @@ package com.cameron.kwikmedical;
  * Class for setting the patient details when they use the system
  */
 public class PatientDetails {
+    public PatientDetails(String pFirstName, String pLastName, Integer nhsNumber, String address, String postCode, String medicalCond) {
+        this.pFirstName = pFirstName;
+        this.pLastName = pLastName;
+        this.nhsNumber = nhsNumber;
+        this.address = address;
+        this.postCode = postCode;
+        this.medicalCond = medicalCond;
+    }
+
     private String pFirstName;
     private String pLastName;
     private Integer nhsNumber;

@@ -37,9 +37,23 @@ public class Client {
             {
                 // Display the received message
                 System.out.println(line);
-                System.out.println("Enter message to send to the server: ");
-                String message = input.readLine();
-                sendMessage.writeUTF(message);
+                System.out.println("Enter your first and last name: ");
+                String nameInput = input.readLine();
+                String[] namesSplit = nameInput.split(" ");
+                System.out.println("Enter your NHS Number: ");
+                String nhsInput = input.readLine();
+                Integer nhsNumber = Integer.parseInt(nhsInput);
+                System.out.println("Enter the address of the Emergency: ");
+                String address = input.readLine();
+                System.out.println("Enter the post code: ");
+                String postCode = input.readLine();
+                System.out.println("What is your medical condition: ");
+                String condition = input.readLine();
+                PatientDetails newPatient = new PatientDetails(namesSplit[0], namesSplit[1], nhsNumber, address, postCode, condition);
+                // Assuming that the first word is the first name, second word is last name
+                //newPatient.setpFirstName(namesSplit[0]);
+                //newPatient.setpLastName(namesSplit[1]);
+                sendMessage.writeUTF(newPatient.toString());
             }
         }
         catch (IOException ioe)
