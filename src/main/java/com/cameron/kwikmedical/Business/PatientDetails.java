@@ -1,4 +1,6 @@
-package com.cameron.kwikmedical;
+package com.cameron.kwikmedical.Business;
+
+import java.util.ArrayList;
 
 /**
  * Class for setting the patient details when they use the system
@@ -13,12 +15,22 @@ public class PatientDetails {
         this.medicalCond = medicalCond;
     }
 
+    private final ArrayList<PatientDetails> patientDetails = new ArrayList<>();
+
     private String pFirstName;
     private String pLastName;
     private Integer nhsNumber;
     private String address;
     private String postCode;
     private String medicalCond;
+
+    public ArrayList<PatientDetails> getPatientDetails() {
+        return patientDetails;
+    }
+
+    public void setPatientDetails(PatientDetails details) {
+        this.patientDetails.add(details);
+    }
 
     public String getpFirstName() {
         return pFirstName;
