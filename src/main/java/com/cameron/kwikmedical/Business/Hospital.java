@@ -46,4 +46,31 @@ public class Hospital {
     public void setHospitalList(Hospital hospitalDetails) {
         this.hospitalList.add(hospitalDetails);
     }
+
+    public String LocateNearestHospital(String postCode, ArrayList<Hospital> hospitalList) {
+        // Not finished
+        // Currently requires a hospital to be in the same post code
+        // Will add in when I get the program in a more finished state
+        String closestHospital = "";
+        String postCodeIdentifier;
+        boolean doubleDigitCode = true;
+
+        if (postCode.length() == 7)
+            postCodeIdentifier = postCode.substring(0, 3);
+        else {
+            postCodeIdentifier = postCode.substring(0, 2);
+            doubleDigitCode = false;
+        }
+        for (Hospital hospital : hospitalList) {
+            if (doubleDigitCode) {
+                if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 3)))
+                    closestHospital = hospital.getName();
+            } else {
+                if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 2)))
+                    closestHospital = hospital.getName();
+            }
+        }
+
+        return closestHospital;
+    }
 }
