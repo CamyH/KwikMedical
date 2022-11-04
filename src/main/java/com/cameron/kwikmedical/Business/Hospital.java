@@ -1,5 +1,7 @@
 package com.cameron.kwikmedical.Business;
 
+import java.util.ArrayList;
+
 public class Hospital {
 
     public Hospital(String name, String address, String postCode) {
@@ -8,6 +10,7 @@ public class Hospital {
         this.postCode = postCode;
     }
 
+    private ArrayList<Hospital> hospitalList;
     private String name;
     private String address;
     private String postCode;
@@ -34,5 +37,13 @@ public class Hospital {
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
+    }
+
+    public ArrayList<Hospital> getHospitalList() {
+        return hospitalList;
+    }
+
+    public void setHospitalList(Hospital hospitalDetails) {
+        this.hospitalList.add(hospitalDetails);
     }
 }

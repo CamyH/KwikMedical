@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 public class GUI {
     public static void main(String[] args) {
+        // CLI for now, will migrate to Swing GUI at a later date.
         try {
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter your first and last name: ");
