@@ -65,9 +65,10 @@ public class Hospital {
             if (doubleDigitCode) {
                 if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 3)))
                     closestHospital = hospital.getName();
+            } else if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 2))) {
+                closestHospital = hospital.getName();
             } else {
-                if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 2)))
-                    closestHospital = hospital.getName();
+                closestHospital = hospital.getName();
             }
         }
 
