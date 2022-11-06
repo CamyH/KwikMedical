@@ -26,7 +26,7 @@ public class GUI {
             newCall.setPatientDetails(newCall);
 
         } catch (IOException ex) {
-            System.err.println(ex);
+            System.err.println(ex.getMessage());
         }
     }
 }
