@@ -7,7 +7,6 @@ import java.sql.*;
 public class Database {
     private Connection conn;
     public void DBConnection() {
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kwikmedical?user=Java&password=Java");
@@ -99,7 +98,23 @@ public class Database {
         return null;
     }
 
-    public void DBUpdateCallOutDetails() {
+    public void DBUpdateCallOutDetails(Integer nhsNumber, String calloutDetails) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, calloutDetails);
 
+            // Execute insertion query
+            preparedStatement.executeQuery();
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
     }
 }
