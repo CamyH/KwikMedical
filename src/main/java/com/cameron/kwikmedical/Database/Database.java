@@ -4,6 +4,9 @@ import com.cameron.kwikmedical.Business.PatientDetails;
 import java.util.ArrayList;
 import java.sql.*;
 
+/**
+ * Class for Database operations
+ */
 public class Database {
     private Connection conn;
     public void DBConnection() {

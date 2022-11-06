@@ -2,6 +2,9 @@ package com.cameron.kwikmedical.Business;
 
 import java.util.ArrayList;
 
+/**
+ * Class for setting the Hospital details
+ */
 public class Hospital {
 
     public Hospital(String name, String address, String postCode) {

@@ -5,6 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Class for constructing GUI
+ */
 public class GUI {
     public static void main(String[] args) {
         // CLI for now, will migrate to Swing GUI at a later date.
