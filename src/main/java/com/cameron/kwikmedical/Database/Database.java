@@ -1,4 +1,7 @@
 package com.cameron.kwikmedical.Database;
+import com.cameron.kwikmedical.Business.PatientDetails;
+
+import java.util.ArrayList;
 import java.sql.*;
 
 public class Database {
@@ -22,7 +25,6 @@ public class Database {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to query DB
-            Statement statement = conn.createStatement();
             String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, nhsNumber);
@@ -30,8 +32,9 @@ public class Database {
             // Execute query and store in result set
             ResultSet results = preparedStatement.executeQuery();
 
-            // Closing DB connection
+            // Closing DB connection and statement
             TerminateDB();
+            preparedStatement.close();
 
             Integer nhsNumberOutput = results.getInt(3);
             return nhsNumberOutput.equals(nhsNumber);
@@ -46,7 +49,6 @@ public class Database {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to insert patient details into DB
-            Statement statement = conn.createStatement();
             String query = "INSERT INTO PatientDetails (FirstName, LastName, NHSNumber, Address, PostCode, MedicalCond) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, firstName);
@@ -59,15 +61,42 @@ public class Database {
             // Execute insertion query
             preparedStatement.executeQuery();
 
-            // Closing DB connection
+            // Closing DB connection and statement
             TerminateDB();
+            preparedStatement.close();
         } catch (Exception err) {
             System.out.println(err.getMessage());
         }
     }
 
-    public void DBRetrievePatientDetails(Integer nhsNumber) {
+    public ArrayList<PatientDetails> DBRetrievePatientDetails(Integer nhsNumber) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, nhsNumber);
 
+            // Execute insertion query
+            ResultSet results = preparedStatement.executeQuery();
+            ArrayList<PatientDetails> details = new ArrayList<>();
+            while (results.next()) {
+                PatientDetails patient = new PatientDetails(results.getString("FirstName"), results.getString("LastName"),
+                        results.getInt("NHSNumber"), results.getString("Address"),
+                        results.getString("PostCode"), results.getString("MedicalCond"));
+                details.add(patient);
+            }
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+
+            return details;
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        return null;
     }
 
     public void DBUpdateCallOutDetails() {
