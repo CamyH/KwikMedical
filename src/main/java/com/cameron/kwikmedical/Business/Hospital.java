@@ -1,6 +1,8 @@
 package com.cameron.kwikmedical.Business;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Class for setting the Hospital details
@@ -57,6 +59,9 @@ public class Hospital {
         String closestHospital = "";
         String postCodeIdentifier;
         boolean doubleDigitCode = true;
+        // Sorting Hospital List
+        hospitalList.sort(Comparator.comparing(Hospital::getPostCode));
+
 
         if (postCode.length() == 7)
             postCodeIdentifier = postCode.substring(0, 3);
@@ -65,16 +70,16 @@ public class Hospital {
             doubleDigitCode = false;
         }
         for (Hospital hospital : hospitalList) {
+            // Grab first hospital from sorted list and store in case it is needed to fall back on later
+            Hospital closest = hospitalList.get(0);
+            closestHospital = closest.getName();
             if (doubleDigitCode) {
                 if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 3)))
                     closestHospital = hospital.getName();
             } else if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 2))) {
                 closestHospital = hospital.getName();
-            } else {
-                closestHospital = hospital.getName();
             }
         }
-
         return closestHospital;
     }
 }
