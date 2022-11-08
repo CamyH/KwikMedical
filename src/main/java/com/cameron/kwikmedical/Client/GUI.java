@@ -14,7 +14,7 @@ public class GUI {
     public static void main(String[] args) {
         // CLI for now, will migrate to Swing GUI at a later date.
         try {
-            Hospital hospital = new Hospital("Royal Hospital", "Napier", "Eh140ht");
+            /*Hospital hospital = new Hospital("Royal Hospital", "Napier", "Eh140ht");
             Hospital hospital2 = new Hospital("Glasgow", "Napier", "Eh240ht");
             Hospital hospital4 = new Hospital("Royal Hospital Electric Boogaloo", "Napier", "Eh130ft");
             Hospital hospital3 = new Hospital("Edinburgh", "Napier", "Eh50ht");
@@ -26,7 +26,7 @@ public class GUI {
             hospitalList.add(hospital4);
             hospitalList.add(hospital5);
             String test = hospital.LocateNearestHospital("Eh40ft", hospitalList);
-            System.out.println(test);
+            System.out.println(test);*/
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter your first and last name: ");
             String nameInput = input.readLine();
