@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import javax.swing.*;
 
 /**
  * Class for constructing GUI
@@ -27,6 +28,7 @@ public class GUI {
             hospitalList.add(hospital5);
             String test = hospital.LocateNearestHospital("Eh40ft", hospitalList);
             System.out.println(test);*/
+
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter your first and last name: ");
             String nameInput = input.readLine();
