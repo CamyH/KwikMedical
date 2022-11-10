@@ -15,19 +15,19 @@ import javax.swing.*;
 public class GUI {
     public GUI() {
         JFrame frame = new JFrame();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(screenSize.width/2, screenSize.height/2);
         frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("KwikMedical");
+        frame.setVisible(true);
         JPanel panel = new JPanel();
         JLabel titleLabel = new JLabel("KwikMedical");
         JLabel bodyLabel = new JLabel("Please enter...");
         JButton submitButton = new JButton("Submit");
-        panel.setBorder(BorderFactory.createEmptyBorder(500, 500, 500, 500));
-        panel.setLayout(new GridLayout(0, 1));
 
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("KwikMedical");
-        frame.pack();
-        frame.setVisible(true);
+        //frame.add(panel, BorderLayout.CENTER);
+
     }
     public static void main(String[] args) {
         // CLI for now, will migrate to Swing GUI at a later date.
