@@ -1,6 +1,7 @@
 package com.cameron.kwikmedical.Client;
 import com.cameron.kwikmedical.Business.*;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +13,22 @@ import javax.swing.*;
  * Class for constructing GUI
  */
 public class GUI {
+    public GUI() {
+        JFrame frame = new JFrame();
+        frame.setResizable(false);
+        JPanel panel = new JPanel();
+        JLabel titleLabel = new JLabel("KwikMedical");
+        JLabel bodyLabel = new JLabel("Please enter...");
+        JButton submitButton = new JButton("Submit");
+        panel.setBorder(BorderFactory.createEmptyBorder(500, 500, 500, 500));
+        panel.setLayout(new GridLayout(0, 1));
+
+        frame.add(panel, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("KwikMedical");
+        frame.pack();
+        frame.setVisible(true);
+    }
     public static void main(String[] args) {
         // CLI for now, will migrate to Swing GUI at a later date.
         try {
@@ -28,7 +45,7 @@ public class GUI {
             hospitalList.add(hospital5);
             String test = hospital.LocateNearestHospital("Eh40ft", hospitalList);
             System.out.println(test);*/
-
+            new GUI();
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter your first and last name: ");
             String nameInput = input.readLine();
