@@ -7,7 +7,8 @@ import java.awt.event.ActionListener;
 
 public class KwikMedical extends JFrame {
     public KwikMedical() {
-        setContentPane(kwikMedicalPanel);
+        CardLayout layout = (CardLayout)KwikMedical.getLayout();
+        setContentPane(KwikMedical);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width/2, screenSize.height/2);
         setTitle("KwikMedical");
@@ -17,7 +18,7 @@ public class KwikMedical extends JFrame {
         HospitalBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                layout.show(KwikMedical, "OperatorPanel");
             }
         });
         OperatorBtn.addActionListener(new ActionListener() {
@@ -29,5 +30,7 @@ public class KwikMedical extends JFrame {
     }
     private JButton HospitalBtn;
     private JButton OperatorBtn;
-    private JPanel kwikMedicalPanel;
+    private JPanel KwikMedicalPanel;
+    private JPanel OperatorPanel;
+    private JPanel KwikMedical;
 }
