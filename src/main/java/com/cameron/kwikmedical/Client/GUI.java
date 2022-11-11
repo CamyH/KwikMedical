@@ -14,20 +14,7 @@ import javax.swing.*;
  */
 public class GUI {
     public GUI() {
-        JFrame frame = new JFrame();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(screenSize.width/2, screenSize.height/2);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("KwikMedical");
-        frame.setVisible(true);
-        JPanel panel = new JPanel();
-        JLabel titleLabel = new JLabel("KwikMedical");
-        JLabel bodyLabel = new JLabel("Please enter...");
-        JButton submitButton = new JButton("Submit");
-
-        //frame.add(panel, BorderLayout.CENTER);
-
+        KwikMedical GUI = new KwikMedical();
     }
     public static void main(String[] args) {
         // CLI for now, will migrate to Swing GUI at a later date.

@@ -3,6 +3,7 @@ package com.cameron.kwikmedical.Business;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 /**
  * Class for setting the Hospital details
@@ -52,34 +53,9 @@ public class Hospital {
         this.hospitalList.add(hospitalDetails);
     }
 
-    public String LocateNearestHospital(String postCode, ArrayList<Hospital> hospitalList) {
-        // Not finished
-        // Currently requires a hospital to be in the same post code
-        // Will add in when I get the program in a more finished state
-        String closestHospital = "";
-        String postCodeIdentifier;
-        boolean doubleDigitCode = true;
-        // Sorting Hospital List
-        hospitalList.sort(Comparator.comparing(Hospital::getPostCode));
-
-
-        if (postCode.length() == 7)
-            postCodeIdentifier = postCode.substring(0, 3);
-        else {
-            postCodeIdentifier = postCode.substring(0, 2);
-            doubleDigitCode = false;
-        }
-        for (Hospital hospital : hospitalList) {
-            // Grab first hospital from sorted list and store in case it is needed to fall back on later
-            Hospital closest = hospitalList.get(0);
-            closestHospital = closest.getName();
-            if (doubleDigitCode) {
-                if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 3)))
-                    closestHospital = hospital.getName();
-            } else if (postCodeIdentifier.equals(hospital.getPostCode().substring(0, 2))) {
-                closestHospital = hospital.getName();
-            }
-        }
-        return closestHospital;
+    public String LocateHospital(ArrayList<Hospital> hospitalList) {
+        Random randInt = new Random();
+        int index = randInt.nextInt(0, hospitalList.size());
+        return hospitalList.get(index).getName();
     }
 }
