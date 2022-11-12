@@ -1,5 +1,6 @@
 package com.cameron.kwikmedical.Client;
 import com.cameron.kwikmedical.Business.*;
+import com.cameron.kwikmedical.Database.Database;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -33,6 +34,10 @@ public class GUI {
             String test = hospital.LocateNearestHospital("Eh40ft", hospitalList);
             System.out.println(test);*/
             new GUI();
+            Database db = new Database();
+            if (db.DBCheckIfPatientExists("1234567899")) {
+                System.out.println("Patient Exists");
+            }
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Enter your first and last name: ");
             String nameInput = input.readLine();
