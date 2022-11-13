@@ -2,8 +2,6 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class KwikMedical extends JFrame {
     public KwikMedical() {
@@ -15,22 +13,12 @@ public class KwikMedical extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-        HospitalBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                layout.show(KwikMedical, "OperatorPanel");
-            }
-        });
-        OperatorBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
     }
-    private JButton HospitalBtn;
-    private JButton OperatorBtn;
     private JPanel KwikMedicalPanel;
-    private JPanel OperatorPanel;
     private JPanel KwikMedical;
+    private JTabbedPane KwikMedicalTabs;
+    private JPanel Hospital;
+    private JPanel Operator;
+    private JLabel CallDetails;
 }
