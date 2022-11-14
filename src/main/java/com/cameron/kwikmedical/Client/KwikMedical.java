@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class KwikMedical extends JFrame {
     public KwikMedical() {
-        CardLayout layout = (CardLayout)KwikMedical.getLayout();
         setContentPane(KwikMedical);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width/2, screenSize.height/2);
@@ -21,4 +20,11 @@ public class KwikMedical extends JFrame {
     private JPanel Hospital;
     private JPanel Operator;
     private JLabel CallDetails;
+    private JTextField textField1;
+    private JTextField NHSNumberOperator;
+    private JTextField pName;
+    private JTextField address;
+    private JTextField medicalCond;
+    private JButton PatientSearch;
+    private JTextField textField2;
 }
