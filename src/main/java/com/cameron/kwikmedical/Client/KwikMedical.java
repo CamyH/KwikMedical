@@ -2,6 +2,9 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import com.cameron.kwikmedical.Database.Database;
 
 public class KwikMedical extends JFrame {
     public KwikMedical() {
@@ -13,6 +16,20 @@ public class KwikMedical extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+        PatientSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Database db = new Database();
+                if (NHSNumberOperator.getText().equals("") || pName.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name");
+                } else {
+                    if(db.DBCheckIfPatientExists(NHSNumberOperator.getText()))
+                        JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
+                    else
+                        JOptionPane.showMessageDialog(null, "Patient does not exist");
+                }
+            }
+        });
     }
     private JPanel KwikMedicalPanel;
     private JPanel KwikMedical;
@@ -22,9 +39,5 @@ public class KwikMedical extends JFrame {
     private JLabel CallDetails;
     private JTextField NHSNumberOperator;
     private JTextField pName;
-    private JTextField address;
-    private JTextField medicalCond;
     private JButton PatientSearch;
-    private JTextField textField2;
-    private JList Hospitals;
 }
