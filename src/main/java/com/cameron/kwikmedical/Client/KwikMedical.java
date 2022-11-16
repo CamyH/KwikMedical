@@ -20,11 +20,11 @@ public class KwikMedical extends JFrame {
     private JPanel Hospital;
     private JPanel Operator;
     private JLabel CallDetails;
-    private JTextField textField1;
     private JTextField NHSNumberOperator;
     private JTextField pName;
     private JTextField address;
     private JTextField medicalCond;
     private JButton PatientSearch;
     private JTextField textField2;
+    private JList Hospitals;
 }
