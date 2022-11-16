@@ -40,4 +40,13 @@ public class KwikMedical extends JFrame {
     private JTextField NHSNumberOperator;
     private JTextField pName;
     private JButton PatientSearch;
+    private JComboBox HospitalList;
+    private JTextField nhsNumberBox;
+    private JTextField fullNameBox;
+    private JTextArea incidentReportBox;
+    private JTextField timeOfIncident;
+    private JTextField incidentLocation;
+    private JTextArea actionTakenBox;
+    private JTextField timeSpentBox;
+    private JButton submitButton;
 }
