@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
+
 import com.cameron.kwikmedical.Database.Database;
 
 public class KwikMedical extends JFrame {
@@ -31,6 +33,26 @@ public class KwikMedical extends JFrame {
                 }
             }
         });
+        SubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LocalTime timeOfIncident = LocalTime.MIDNIGHT;
+                //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
+                //String fullName = fullNameBox.getText();
+                if (timeOfIncidentBox.getText().contains(":"))
+                    timeOfIncident = LocalTime.parse(timeOfIncidentBox.getText());
+                else
+                    JOptionPane.showMessageDialog(null, "Please enter a valid time. (HH:MM)");
+                //String location = incidentLocation.getText();
+                //String timeSpent = timeSpentBox.getText();
+                //String actionTaken = actionTakenBox.getText();
+                //String incidentReport = incidentReportBox.getText();
+
+                // Parse time of incident to seconds and store in integer for use in db
+                int timeInSeconds = timeOfIncident.toSecondOfDay();
+                System.out.println(timeOfIncident);
+            }
+        });
     }
     private JPanel KwikMedicalPanel;
     private JPanel KwikMedical;
@@ -45,9 +67,9 @@ public class KwikMedical extends JFrame {
     private JTextField nhsNumberBox;
     private JTextField fullNameBox;
     private JTextArea incidentReportBox;
-    private JTextField timeOfIncident;
+    private JTextField timeOfIncidentBox;
     private JTextField incidentLocation;
     private JTextArea actionTakenBox;
     private JTextField timeSpentBox;
-    private JButton submitButton;
+    private JButton SubmitButton;
 }
