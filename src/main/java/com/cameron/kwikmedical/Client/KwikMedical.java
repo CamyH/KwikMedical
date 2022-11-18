@@ -36,6 +36,7 @@ public class KwikMedical extends JFrame {
         SubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Initialise time as midnight
                 LocalTime timeOfIncident = LocalTime.MIDNIGHT;
                 //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
                 //String fullName = fullNameBox.getText();
