@@ -13,6 +13,7 @@ public class KwikMedical extends JFrame {
         setSize(screenSize.width/2, screenSize.height/2);
         setTitle("KwikMedical");
         setResizable(false);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
