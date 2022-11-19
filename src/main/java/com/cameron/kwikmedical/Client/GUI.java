@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- * Class for constructing GUI
+ * Class for calling GUI
  */
 public class GUI {
     public GUI() {
@@ -20,5 +20,7 @@ public class GUI {
     public static void main(String[] args) {
         new GUI();
         Database db = new Database();
+        ArrayList<Hospital> allHospitals = db.DBRetrieveAllHospitals();
+        System.out.println(allHospitals.size());
     }
 }

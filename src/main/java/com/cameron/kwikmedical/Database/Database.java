@@ -1,4 +1,5 @@
 package com.cameron.kwikmedical.Database;
+import com.cameron.kwikmedical.Business.Hospital;
 import com.cameron.kwikmedical.Business.PatientDetails;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ public class Database {
         try {
             // Connecting to DB
             DBConnection();
-            // Setting up PreparedStatement to insert patient details into DB
+            // Setting up PreparedStatement to retrieve patient details from DB
             String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, nhsNumber);
@@ -108,7 +109,7 @@ public class Database {
         try {
             // Connecting to DB
             DBConnection();
-            // Setting up PreparedStatement to insert patient details into DB
+            // Setting up PreparedStatement to insert call out details into DB
             String query = "";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, calloutDetails);
@@ -128,7 +129,7 @@ public class Database {
         try {
             // Connecting to DB
             DBConnection();
-            // Setting up PreparedStatement to insert patient details into DB
+            // Setting up PreparedStatement to insert hospitals into DB
             String query = "INSERT INTO Hospitals (Name, Address, PostCode) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, name);
@@ -144,5 +145,30 @@ public class Database {
         } catch (Exception err) {
             System.out.println(err.getMessage());
         }
+    }
+
+    public ArrayList<Hospital> DBRetrieveAllHospitals() {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "SELECT * FROM Hospitals";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            // Execute selection query
+            ResultSet results = preparedStatement.executeQuery();
+            ArrayList<Hospital> hospitalList = new ArrayList<>();
+            while (results.next()) {
+                Hospital newHospital = new Hospital(results.getString("Name"), results.getString("Address"), results.getString("PostCode"));
+                hospitalList.add(newHospital);
+            }
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+            return hospitalList;
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        return null;
     }
 }
