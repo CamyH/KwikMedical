@@ -19,8 +19,5 @@ public class GUI {
     }
     public static void main(String[] args) {
         new GUI();
-        Database db = new Database();
-        ArrayList<Hospital> allHospitals = db.DBRetrieveAllHospitals();
-        System.out.println(allHospitals.size());
     }
 }
