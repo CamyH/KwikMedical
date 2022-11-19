@@ -21,6 +21,11 @@ public class Hospital {
     private String address;
     private String postCode;
 
+    public String LocateHospital(ArrayList<Hospital> hospitalList) {
+        Random randInt = new Random();
+        int index = randInt.nextInt(0, hospitalList.size());
+        return hospitalList.get(index).getName();
+    }
     public String getName() {
         return name;
     }
@@ -53,9 +58,4 @@ public class Hospital {
         this.hospitalList.add(hospitalDetails);
     }
 
-    public String LocateHospital(ArrayList<Hospital> hospitalList) {
-        Random randInt = new Random();
-        int index = randInt.nextInt(0, hospitalList.size());
-        return hospitalList.get(index).getName();
-    }
 }

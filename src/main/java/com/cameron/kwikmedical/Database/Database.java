@@ -64,7 +64,7 @@ public class Database {
             preparedStatement.setString(6, medicalCond);
 
             // Execute insertion query
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
 
             // Closing DB connection and statement
             TerminateDB();
@@ -115,6 +115,28 @@ public class Database {
 
             // Execute insertion query
             preparedStatement.executeQuery();
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+    }
+
+    public void DBAddHospital(String name, String address, String postCode) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "INSERT INTO Hospitals (Name, Address, PostCode) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, address);
+            preparedStatement.setString(3, postCode);
+
+            // Execute insertion query
+            preparedStatement.execute();
 
             // Closing DB connection and statement
             TerminateDB();
