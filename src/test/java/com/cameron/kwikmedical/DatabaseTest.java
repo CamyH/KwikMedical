@@ -7,13 +7,50 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
+import java.util.ArrayList;
 
 public class DatabaseTest {
     static Database database;
-    private static Connection conn;
+
+    /**
+     * Prepare for the tests by initialising database class
+     */
     @BeforeAll
     static void init() {
         database = new Database();
+    }
+
+    /**
+     * Query the database to check if a patient exists
+     * Confirm that the method returns the correct answer
+     */
+    @Test
+    void DBCheckIfPatientExists() {
+        Boolean correctAnswer = true;
+        // NHS Number for patient "James Bond" used for testing
+        String testNhsNum = "1234567899";
+        Assertions.assertEquals(correctAnswer, database.DBCheckIfPatientExists(testNhsNum));
+    }
+
+    /**
+     * Query the database and return all the hospitals
+     * Confirm that the method returns an array list of the correct length
+     * Size of the array should be 20 as that is the number of specified hospitals
+     */
+    @Test
+    void DBRetrieveAllHospitals() {
+        Assertions.assertEquals(20, database.DBRetrieveAllHospitals().size());
+    }
+
+    /**
+     * Query the database and return the details of the specified patient
+     * Confirm that the method returns an object containing the correct patient details
+     * Checking the NHS Number as that is unique
+     */
+    @Test
+    void DBRetrievePatientDetails() {
+        // NHS Number for patient "James Bond" used for testing
+        Integer testNHSNumber = 1234567899;
+        Assertions.assertEquals(testNHSNumber, database.DBRetrievePatientDetails(testNHSNumber).getNhsNumber());
     }
 }

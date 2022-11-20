@@ -75,7 +75,7 @@ public class Database {
         }
     }
 
-    public ArrayList<PatientDetails> DBRetrievePatientDetails(Integer nhsNumber) {
+    public PatientDetails DBRetrievePatientDetails(Integer nhsNumber) {
         try {
             // Connecting to DB
             DBConnection();
@@ -86,19 +86,18 @@ public class Database {
 
             // Execute insertion query
             ResultSet results = preparedStatement.executeQuery();
-            ArrayList<PatientDetails> details = new ArrayList<>();
+            PatientDetails patient = null;
             while (results.next()) {
-                PatientDetails patient = new PatientDetails(results.getString("FirstName"), results.getString("LastName"),
+                patient = new PatientDetails(results.getString("FirstName"), results.getString("LastName"),
                         results.getInt("NHSNumber"), results.getString("Address"),
                         results.getString("PostCode"), results.getString("MedicalCond"));
-                details.add(patient);
             }
 
             // Closing DB connection and statement
             TerminateDB();
             preparedStatement.close();
 
-            return details;
+            return patient;
         } catch (Exception err) {
             System.out.println(err.getMessage());
         }
