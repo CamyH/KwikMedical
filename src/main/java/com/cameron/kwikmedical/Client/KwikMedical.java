@@ -2,10 +2,13 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.cameron.kwikmedical.Business.HospitalRequest;
 import com.cameron.kwikmedical.Business.PatientDetails;
 import com.cameron.kwikmedical.Database.Database;
 import com.cameron.kwikmedical.Business.Hospital;
@@ -68,13 +71,32 @@ public class KwikMedical extends JFrame {
         });
 
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
-        KwikMedicalTabs.addChangeListener(e -> PopulateHospitalList());
+        KwikMedicalTabs.addChangeListener(e -> PopulateHospitalLists());
+
+        UpdateListBtn.addActionListener(e -> {
+            PopulateRequestsBox();
+        });
     }
-    private void PopulateHospitalList() {
+    private void PopulateHospitalLists() {
         ArrayList<Hospital> allHospitals = new Database().DBRetrieveAllHospitals();
         for (Hospital hospital : allHospitals) {
             HospitalList.addItem(hospital.getName());
+            HospitalSystemList.addItem(hospital.getName());
         }
+    }
+
+    private void PopulateRequestsBox() {
+        String hospitalName = HospitalSystemList.getSelectedItem().toString();
+        DefaultListModel requestModel = new DefaultListModel<>();
+        ArrayList<HospitalRequest> allRequests = new Database().DBRetrieveHospitalRequests(hospitalName);
+        requestModel.clear();
+        int idx = 1;
+        for (HospitalRequest request : allRequests) {
+            requestModel.addElement("id: " + idx + ", " + request.getHospitalName() + ", " + request.getHospitalAddress() + ", " + request.getPatientName() + ", " +
+                    String.valueOf(request.getnHSNumber()) + ", " + request.getMedicalCond() + ", " + String.valueOf(request.getAmbulanceSent()));
+            idx++;
+        }
+        RequestsBox.setModel(requestModel);
     }
 
     private Hospital GenerateAmbulanceRequest() {
@@ -104,4 +126,7 @@ public class KwikMedical extends JFrame {
     private JTextField AddressBox;
     private JTextField MedicalCondBox;
     private JPanel Hospital;
+    private JComboBox HospitalSystemList;
+    private JList RequestsBox;
+    private JButton UpdateListBtn;
 }

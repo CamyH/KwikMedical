@@ -1,6 +1,5 @@
 package com.cameron.kwikmedical.Database;
-import com.cameron.kwikmedical.Business.Hospital;
-import com.cameron.kwikmedical.Business.PatientDetails;
+import com.cameron.kwikmedical.Business.*;
 
 import java.util.ArrayList;
 import java.sql.*;
@@ -171,6 +170,34 @@ public class Database {
         } catch (Exception err) {
             System.out.println(err.getMessage());
         }
+    }
+
+    public ArrayList<HospitalRequest> DBRetrieveHospitalRequests(String hospitalName) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "SELECT * FROM HospitalSystem WHERE HospitalName LIKE ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, hospitalName);
+            // Execute selection query
+            ResultSet results = preparedStatement.executeQuery();
+            ArrayList<HospitalRequest> allRequests = new ArrayList<>();
+            while (results.next()) {
+                HospitalRequest request = new HospitalRequest(results.getString("HospitalName"), results.getString("HospitalAddress"), results.getString("PatientName"),
+                        results.getInt("NHSNumber"), results.getString("PatientAddress")
+                        , results.getString("MedicalCond"), results.getBoolean("AmbulanceSent"));
+                allRequests.add(request);
+            }
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+            return allRequests;
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        return null;
     }
 
     public ArrayList<Hospital> DBRetrieveAllHospitals() {
