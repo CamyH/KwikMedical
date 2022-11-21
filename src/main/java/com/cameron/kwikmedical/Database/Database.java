@@ -38,31 +38,33 @@ public class Database {
 
 
                 results.next();
-                Integer nhsNumberOutput = results.getInt(3);
+                Integer nhsNumberOutput = results.getInt(2);
                 System.out.println(nhsNumberOutput);
                 // Closing DB connection and statement
                 TerminateDB();
                 preparedStatement.close();
                 return nhsNumberOutput.equals(Integer.parseInt(nhsNumber));
             } catch (Exception err) {
-                System.out.println(err.getMessage());
+                System.out.println("Error with Database: " + err.getMessage());
             }
             return false;
         }
 
-    public void DBInsertPatientDetails(String firstName, String lastName, Integer nhsNumber, String address, String postCode, String medicalCond) {
+    public void DBInsertPatientDetails(PatientDetails patient) {
         try {
+            String fullName = patient.getpFullName();
+            Integer nhsNumber = patient.getNhsNumber();
+            String address = patient.getAddress();
+            String medicalCond = patient.getMedicalCond();
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to insert patient details into DB
-            String query = "INSERT INTO PatientDetails (FirstName, LastName, NHSNumber, Address, PostCode, MedicalCond) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO PatientDetails (FullName, NHSNumber, Address, MedicalCond) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, firstName);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setInt(3, nhsNumber);
-            preparedStatement.setString(4, address);
-            preparedStatement.setString(5, postCode);
-            preparedStatement.setString(6, medicalCond);
+            preparedStatement.setString(1, fullName);
+            preparedStatement.setInt(2, nhsNumber);
+            preparedStatement.setString(3, address);
+            preparedStatement.setString(4, medicalCond);
 
             // Execute insertion query
             preparedStatement.execute();
@@ -88,9 +90,9 @@ public class Database {
             ResultSet results = preparedStatement.executeQuery();
             PatientDetails patient = null;
             while (results.next()) {
-                patient = new PatientDetails(results.getString("FirstName"), results.getString("LastName"),
-                        results.getInt("NHSNumber"), results.getString("Address"),
-                        results.getString("PostCode"), results.getString("MedicalCond"));
+                patient = new PatientDetails(results.getString("FullName"),
+                        results.getInt("NHSNumber"), results.getString("Address")
+                        , results.getString("MedicalCond"));
             }
 
             // Closing DB connection and statement
@@ -124,16 +126,40 @@ public class Database {
         }
     }
 
-    public void DBAddHospital(String name, String address, String postCode) {
+    public void DBAddHospital(String name, String address) {
         try {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to insert hospitals into DB
-            String query = "INSERT INTO Hospitals (Name, Address, PostCode) VALUES (?, ?, ?)";
+            String query = "INSERT INTO Hospitals (Name, Address) VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, address);
-            preparedStatement.setString(3, postCode);
+
+            // Execute insertion query
+            preparedStatement.execute();
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+    }
+
+    public void DBSendDetailsToHospital(Hospital hospital, PatientDetails patient) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert hospitals into DB
+            String query = "INSERT INTO HospitalSystem (HospitalName, HospitalAddress, PatientName, NHSNumber, Address, MedicalCond) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, hospital.getName());
+            preparedStatement.setString(2, hospital.getAddress());
+            preparedStatement.setString(3, patient.getpFullName());
+            preparedStatement.setInt(4, patient.getNhsNumber());
+            preparedStatement.setString(5, patient.getAddress());
+            preparedStatement.setString(6, patient.getMedicalCond());
 
             // Execute insertion query
             preparedStatement.execute();
@@ -157,7 +183,7 @@ public class Database {
             ResultSet results = preparedStatement.executeQuery();
             ArrayList<Hospital> hospitalList = new ArrayList<>();
             while (results.next()) {
-                Hospital newHospital = new Hospital(results.getString("Name"), results.getString("Address"), results.getString("PostCode"));
+                Hospital newHospital = new Hospital(results.getString("Name"), results.getString("Address"));
                 hospitalList.add(newHospital);
             }
 

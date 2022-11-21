@@ -6,46 +6,34 @@ import java.util.ArrayList;
  * Class for setting the patient details when they use the system
  */
 public class PatientDetails {
-    public PatientDetails(String pFirstName, String pLastName, Integer nhsNumber, String address, String postCode, String medicalCond) {
-        this.pFirstName = pFirstName;
-        this.pLastName = pLastName;
+    public PatientDetails(String pFullName, Integer nhsNumber, String address, String medicalCond) {
+        this.pFullName = pFullName;
         this.nhsNumber = nhsNumber;
         this.address = address;
-        this.postCode = postCode;
         this.medicalCond = medicalCond;
     }
 
     private final ArrayList<PatientDetails> patientDetails = new ArrayList<>();
 
-    private String pFirstName;
-    private String pLastName;
+    private String pFullName;
     private Integer nhsNumber;
     private String address;
-    private String postCode;
     private String medicalCond;
 
     public ArrayList<PatientDetails> getPatientDetails() {
         return patientDetails;
     }
 
-    public void setPatientDetails(PatientDetails details) {
+    public void setpFullName(PatientDetails details) {
         this.patientDetails.add(details);
     }
 
-    public String getpFirstName() {
-        return pFirstName;
+    public String getpFullName() {
+        return pFullName;
     }
 
-    public void setpFirstName(String pFirstName) {
-        this.pFirstName = pFirstName;
-    }
-
-    public String getpLastName() {
-        return pLastName;
-    }
-
-    public void setpLastName(String pLastName) {
-        this.pLastName = pLastName;
+    public void set(String pFirstName) {
+        this.pFullName = pFirstName;
     }
 
     public Integer getNhsNumber() {
@@ -62,14 +50,6 @@ public class PatientDetails {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
     }
 
     public String getMedicalCond() {

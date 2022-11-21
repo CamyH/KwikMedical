@@ -4,14 +4,12 @@ package com.cameron.kwikmedical.Business;
  * Class for setting the Hospital details
  */
 public class Hospital {
-    public Hospital(String name, String address, String postCode) {
+    public Hospital(String name, String address) {
         this.name = name;
         this.address = address;
-        this.postCode = postCode;
     }
     private String name;
     private String address;
-    private String postCode;
 
     public String getName() {
         return name;
@@ -27,14 +25,6 @@ public class Hospital {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
     }
 
 }

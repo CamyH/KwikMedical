@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Random;
 
+import com.cameron.kwikmedical.Business.PatientDetails;
 import com.cameron.kwikmedical.Database.Database;
 import com.cameron.kwikmedical.Business.Hospital;
 
@@ -19,15 +21,31 @@ public class KwikMedical extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+        /**
+         * Operator Panel
+         * Searching for Patient
+         * If Patient Exists, Generate ambulance request and send details to that Hospital
+         * If Patient does not exist, add new patient to database, then generate ambulance request and send details to that Hospital
+         */
         PatientSearch.addActionListener(e -> {
             if (NHSNumberOperator.getText().equals("") || pName.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name");
-            } else {
-                if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText()))
+                JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name.");
+            } else if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
                     JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
-                else
-                    JOptionPane.showMessageDialog(null, "Patient does not exist");
-            }
+                    Hospital requestedHospital = GenerateAmbulanceRequest();
+                    PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
+                    new Database().DBSendDetailsToHospital(requestedHospital, patient);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database.");
+                    // Adding new patient to Database
+                    PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
+                    new Database().DBInsertPatientDetails(patient);
+                    Hospital requestedHospital = GenerateAmbulanceRequest();
+                    PatientDetails newPatient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
+                    new Database().DBSendDetailsToHospital(requestedHospital, newPatient);
+                }
+
+
         });
 
         SubmitButton.addActionListener(e -> {
@@ -58,6 +76,13 @@ public class KwikMedical extends JFrame {
             HospitalList.addItem(hospital.getName());
         }
     }
+
+    private Hospital GenerateAmbulanceRequest() {
+        Random randInt = new Random();
+        ArrayList<Hospital> allHospitals = new Database().DBRetrieveAllHospitals();
+        return allHospitals.get(randInt.nextInt(0, 20));
+    }
+
     private JPanel KwikMedicalPanel;
     private JPanel KwikMedical;
     private JTabbedPane KwikMedicalTabs;
@@ -76,4 +101,6 @@ public class KwikMedical extends JFrame {
     private JTextArea actionTakenBox;
     private JTextField timeSpentBox;
     private JButton SubmitButton;
+    private JTextField AddressBox;
+    private JTextField MedicalCondBox;
 }
