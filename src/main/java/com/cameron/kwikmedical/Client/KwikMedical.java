@@ -90,11 +90,13 @@ public class KwikMedical extends JFrame {
         DefaultListModel requestModel = new DefaultListModel<>();
         ArrayList<HospitalRequest> allRequests = new Database().DBRetrieveHospitalRequests(hospitalName);
         requestModel.clear();
-        int idx = 1;
         for (HospitalRequest request : allRequests) {
-            requestModel.addElement("id: " + idx + ", " + request.getHospitalName() + ", " + request.getHospitalAddress() + ", " + request.getPatientName() + ", " +
-                    String.valueOf(request.getnHSNumber()) + ", " + request.getMedicalCond() + ", " + String.valueOf(request.getAmbulanceSent()));
-            idx++;
+            requestModel.addElement("Hospital Name: " + request.getHospitalName());
+            requestModel.addElement("Hospital Address: " + request.getHospitalAddress());
+            requestModel.addElement("Patient Name: " + request.getPatientName());
+            requestModel.addElement("Patient NHS Number: " + request.getnHSNumber());
+            requestModel.addElement("Medical Condition: " + request.getMedicalCond());
+            requestModel.addElement("Ambulance Sent: " + request.getAmbulanceSent());
         }
         RequestsBox.setModel(requestModel);
     }
