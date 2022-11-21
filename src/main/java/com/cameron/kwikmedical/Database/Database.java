@@ -147,12 +147,12 @@ public class Database {
         }
     }
 
-    public void DBSendDetailsToHospital(Hospital hospital, PatientDetails patient) {
+    public void DBSendDetailsToHospital(Hospital hospital, PatientDetails patient, Boolean ambulanceSent) {
         try {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to insert hospitals into DB
-            String query = "INSERT INTO HospitalSystem (HospitalName, HospitalAddress, PatientName, NHSNumber, Address, MedicalCond) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO HospitalSystem (HospitalName, HospitalAddress, PatientName, NHSNumber, PatientAddress, MedicalCond, AmbulanceSent) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, hospital.getName());
             preparedStatement.setString(2, hospital.getAddress());
@@ -160,6 +160,7 @@ public class Database {
             preparedStatement.setInt(4, patient.getNhsNumber());
             preparedStatement.setString(5, patient.getAddress());
             preparedStatement.setString(6, patient.getMedicalCond());
+            preparedStatement.setBoolean(7, ambulanceSent);
 
             // Execute insertion query
             preparedStatement.execute();

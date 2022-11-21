@@ -34,15 +34,15 @@ public class KwikMedical extends JFrame {
                     JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
-                    new Database().DBSendDetailsToHospital(requestedHospital, patient);
+                    new Database().DBSendDetailsToHospital(requestedHospital, patient, true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database.");
-                    // Adding new patient to Database
+                    // Adding new patient to Database before generating ambulance request and sending to hospital
                     PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBInsertPatientDetails(patient);
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     PatientDetails newPatient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
-                    new Database().DBSendDetailsToHospital(requestedHospital, newPatient);
+                    new Database().DBSendDetailsToHospital(requestedHospital, newPatient, true);
                 }
 
 
@@ -86,7 +86,7 @@ public class KwikMedical extends JFrame {
     private JPanel KwikMedicalPanel;
     private JPanel KwikMedical;
     private JTabbedPane KwikMedicalTabs;
-    private JPanel Hospital;
+    private JPanel Device;
     private JPanel Operator;
     private JLabel CallDetails;
     private JTextField NHSNumberOperator;
@@ -103,4 +103,5 @@ public class KwikMedical extends JFrame {
     private JButton SubmitButton;
     private JTextField AddressBox;
     private JTextField MedicalCondBox;
+    private JPanel Hospital;
 }
