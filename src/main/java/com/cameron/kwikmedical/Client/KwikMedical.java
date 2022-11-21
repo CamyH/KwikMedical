@@ -2,8 +2,6 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
@@ -56,8 +54,8 @@ public class KwikMedical extends JFrame {
             LocalTime timeOfIncident = LocalTime.MIDNIGHT;
             //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
             //String fullName = fullNameBox.getText();
-            if (timeOfIncidentBox.getText().contains(":"))
-                timeOfIncident = LocalTime.parse(timeOfIncidentBox.getText());
+            if (TimeOfIncidentBox.getText().contains(":"))
+                timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid time. (HH:MM)");
             //String location = incidentLocation.getText();
@@ -73,7 +71,7 @@ public class KwikMedical extends JFrame {
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
         KwikMedicalTabs.addChangeListener(e -> PopulateHospitalLists());
 
-        UpdateListBtn.addActionListener(e -> {
+        UpdateListButton.addActionListener(e -> {
             PopulateRequestsBox();
         });
     }
@@ -120,7 +118,7 @@ public class KwikMedical extends JFrame {
     private JTextField nhsNumberBox;
     private JTextField fullNameBox;
     private JTextArea incidentReportBox;
-    private JTextField timeOfIncidentBox;
+    private JTextField TimeOfIncidentBox;
     private JTextField incidentLocation;
     private JTextArea actionTakenBox;
     private JTextField timeSpentBox;
@@ -130,5 +128,5 @@ public class KwikMedical extends JFrame {
     private JPanel Hospital;
     private JComboBox HospitalSystemList;
     private JList RequestsBox;
-    private JButton UpdateListBtn;
+    private JButton UpdateListButton;
 }
