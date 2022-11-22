@@ -50,22 +50,20 @@ public class KwikMedical extends JFrame {
         });
 
         SubmitButton.addActionListener(e -> {
-            // Initialise time as midnight
+            // Initialise time of incident as midnight by default
             LocalTime timeOfIncident = LocalTime.MIDNIGHT;
+            // Basic input validation for time of incident
+            if (TimeOfIncidentBox.getText().contains(":"))
+                timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
             //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
             //String fullName = fullNameBox.getText();
             if (TimeOfIncidentBox.getText().contains(":"))
                 timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid time. (HH:MM)");
-            //String location = incidentLocation.getText();
-            //String timeSpent = timeSpentBox.getText();
-            //String actionTaken = actionTakenBox.getText();
-            //String incidentReport = incidentReportBox.getText();
 
-            // Parse time of incident to seconds and store in integer for use in db
-            int timeInSeconds = timeOfIncident.toSecondOfDay();
-            System.out.println(timeOfIncident);
+            // Insert details into DB
+            new Database().DBInsertCallOutDetails(nhsNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
         });
 
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
@@ -78,7 +76,7 @@ public class KwikMedical extends JFrame {
     private void PopulateHospitalLists() {
         ArrayList<Hospital> allHospitals = new Database().DBRetrieveAllHospitals();
         for (Hospital hospital : allHospitals) {
-            HospitalList.addItem(hospital.getName());
+            //HospitalList.addItem(hospital.getName());
             HospitalSystemList.addItem(hospital.getName());
         }
     }

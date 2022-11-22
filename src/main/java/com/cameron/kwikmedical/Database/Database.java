@@ -9,46 +9,46 @@ import java.sql.*;
  * Class for Database operations
  */
 public class Database {
-        private Connection conn;
-        public void DBConnection() {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kwikmedical?user=Java&password=Java");
-            } catch (Exception err) {
-                System.out.println(err.getMessage());
-            }
+    private Connection conn;
+    public void DBConnection() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kwikmedical?user=Java&password=Java");
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
+    }
 
-        public void TerminateDB() throws SQLException {
-            conn.close();
+    public void TerminateDB() throws SQLException {
+        conn.close();
+    }
+
+    public Boolean DBCheckIfPatientExists(String nhsNumber) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to query DB
+            String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            int nhsNum = Integer.parseInt(nhsNumber);
+            preparedStatement.setInt(1, nhsNum);
+
+            // Execute query and store in result set
+            ResultSet results = preparedStatement.executeQuery();
+
+
+            results.next();
+            Integer nhsNumberOutput = results.getInt(2);
+            System.out.println(nhsNumberOutput);
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+            return nhsNumberOutput.equals(Integer.parseInt(nhsNumber));
+        } catch (Exception err) {
+            System.out.println("Error with Database: " + err.getMessage());
         }
-
-        public Boolean DBCheckIfPatientExists(String nhsNumber) {
-            try {
-                // Connecting to DB
-                DBConnection();
-                // Setting up PreparedStatement to query DB
-                String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
-                PreparedStatement preparedStatement = conn.prepareStatement(query);
-                int nhsNum = Integer.parseInt(nhsNumber);
-                preparedStatement.setInt(1, nhsNum);
-
-                // Execute query and store in result set
-                ResultSet results = preparedStatement.executeQuery();
-
-
-                results.next();
-                Integer nhsNumberOutput = results.getInt(2);
-                System.out.println(nhsNumberOutput);
-                // Closing DB connection and statement
-                TerminateDB();
-                preparedStatement.close();
-                return nhsNumberOutput.equals(Integer.parseInt(nhsNumber));
-            } catch (Exception err) {
-                System.out.println("Error with Database: " + err.getMessage());
-            }
-            return false;
-        }
+        return false;
+    }
 
     public void DBInsertPatientDetails(PatientDetails patient) {
         try {
@@ -104,6 +104,26 @@ public class Database {
             System.out.println(err.getMessage());
         }
         return null;
+    }
+
+    public void DBUpdateCallOutDetails(Integer nhsNumber, String calloutDetails) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert call out details into DB
+            String query = "";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, calloutDetails);
+
+            // Execute insertion query
+            preparedStatement.executeQuery();
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
     }
 
     public void DBAddHospital(String name, String address) {
