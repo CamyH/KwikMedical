@@ -55,8 +55,6 @@ public class KwikMedical extends JFrame {
             // Basic input validation for time of incident
             if (TimeOfIncidentBox.getText().contains(":"))
                 timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
-            //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
-            //String fullName = fullNameBox.getText();
             if (TimeOfIncidentBox.getText().contains(":"))
                 timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
             else
