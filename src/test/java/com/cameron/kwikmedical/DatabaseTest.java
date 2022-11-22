@@ -1,8 +1,6 @@
 package com.cameron.kwikmedical;
 
-import com.cameron.kwikmedical.Client.*;
 import com.cameron.kwikmedical.Database.*;
-import com.cameron.kwikmedical.Business.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

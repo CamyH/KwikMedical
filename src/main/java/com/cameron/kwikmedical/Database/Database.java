@@ -106,26 +106,6 @@ public class Database {
         return null;
     }
 
-    public void DBUpdateCallOutDetails(Integer nhsNumber, String calloutDetails) {
-        try {
-            // Connecting to DB
-            DBConnection();
-            // Setting up PreparedStatement to insert call out details into DB
-            String query = "";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, calloutDetails);
-
-            // Execute insertion query
-            preparedStatement.executeQuery();
-
-            // Closing DB connection and statement
-            TerminateDB();
-            preparedStatement.close();
-        } catch (Exception err) {
-            System.out.println(err.getMessage());
-        }
-    }
-
     public void DBAddHospital(String name, String address) {
         try {
             // Connecting to DB
