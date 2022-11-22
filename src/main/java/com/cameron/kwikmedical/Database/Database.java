@@ -1,6 +1,7 @@
 package com.cameron.kwikmedical.Database;
 import com.cameron.kwikmedical.Business.*;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -105,26 +106,6 @@ public class Database {
         return null;
     }
 
-    public void DBUpdateCallOutDetails(Integer nhsNumber, String calloutDetails) {
-        try {
-            // Connecting to DB
-            DBConnection();
-            // Setting up PreparedStatement to insert call out details into DB
-            String query = "";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, calloutDetails);
-
-            // Execute insertion query
-            preparedStatement.executeQuery();
-
-            // Closing DB connection and statement
-            TerminateDB();
-            preparedStatement.close();
-        } catch (Exception err) {
-            System.out.println(err.getMessage());
-        }
-    }
-
     public void DBAddHospital(String name, String address) {
         try {
             // Connecting to DB
@@ -223,5 +204,39 @@ public class Database {
             System.out.println(err.getMessage());
         }
         return null;
+    }
+
+    public void DBInsertCallOutDetails(String nhsNumber, String fullName, LocalTime timeOfIncident, String locationOfIncident, String timeSpentOnCall, String actionTaken, String incidentReport) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to insert patient details into DB
+            String query = "INSERT INTO CallOutDetails (NHSNumber, PatientName, TimeOfIncident, LocationOfIncident, TimeSpentOnCall, ActionTaken, IncidentReport) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, Integer.parseInt(nhsNumber));
+            preparedStatement.setString(2, fullName);
+            preparedStatement.setTime(3, Time.valueOf(timeOfIncident));
+            preparedStatement.setString(4, locationOfIncident);
+            preparedStatement.setInt(5, Integer.parseInt(timeSpentOnCall));
+            preparedStatement.setString(6, actionTaken);
+            preparedStatement.setString(7, incidentReport);
+
+            // PreparedStatement to update patient's medical condition
+            String patientDetailsQuery = "UPDATE PatientDetails SET MedicalCond = ? WHERE NHSNumber = ?";
+            PreparedStatement preparedStatementPatient = conn.prepareStatement(patientDetailsQuery);
+            preparedStatementPatient.setString(1, actionTaken);
+            preparedStatementPatient.setInt(2, Integer.parseInt(nhsNumber));
+
+            // Execute insertion query
+            preparedStatement.execute();
+            // Execute update query
+            preparedStatementPatient.executeUpdate();
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
     }
 }
