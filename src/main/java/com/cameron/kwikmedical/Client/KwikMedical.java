@@ -2,8 +2,6 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,29 +50,35 @@ public class KwikMedical extends JFrame {
         });
 
         SubmitButton.addActionListener(e -> {
-            // Initialise time of incident as midnight by default
+            // Initialise time as midnight
             LocalTime timeOfIncident = LocalTime.MIDNIGHT;
-            // Basic input validation for time of incident
-            if (timeOfIncidentBox.getText().contains(":"))
-                timeOfIncident = LocalTime.parse(timeOfIncidentBox.getText());
+            //Integer nhsNum = Integer.parseInt(nhsNumberBox.getText());
+            //String fullName = fullNameBox.getText();
+            if (TimeOfIncidentBox.getText().contains(":"))
+                timeOfIncident = LocalTime.parse(TimeOfIncidentBox.getText());
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid time. (HH:MM)");
+            //String location = incidentLocation.getText();
+            //String timeSpent = timeSpentBox.getText();
+            //String actionTaken = actionTakenBox.getText();
+            //String incidentReport = incidentReportBox.getText();
 
-            // Insert details into DB
-            new Database().DBInsertCallOutDetails(nhsNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
+            // Parse time of incident to seconds and store in integer for use in db
+            int timeInSeconds = timeOfIncident.toSecondOfDay();
+            System.out.println(timeOfIncident);
         });
 
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
         KwikMedicalTabs.addChangeListener(e -> PopulateHospitalLists());
 
-        UpdateListBtn.addActionListener(e -> {
+        UpdateListButton.addActionListener(e -> {
             PopulateRequestsBox();
         });
     }
     private void PopulateHospitalLists() {
         ArrayList<Hospital> allHospitals = new Database().DBRetrieveAllHospitals();
         for (Hospital hospital : allHospitals) {
-            //HospitalList.addItem(hospital.getName());
+            HospitalList.addItem(hospital.getName());
             HospitalSystemList.addItem(hospital.getName());
         }
     }
@@ -114,7 +118,7 @@ public class KwikMedical extends JFrame {
     private JTextField nhsNumberBox;
     private JTextField fullNameBox;
     private JTextArea incidentReportBox;
-    private JTextField timeOfIncidentBox;
+    private JTextField TimeOfIncidentBox;
     private JTextField incidentLocation;
     private JTextArea actionTakenBox;
     private JTextField timeSpentBox;
@@ -124,5 +128,5 @@ public class KwikMedical extends JFrame {
     private JPanel Hospital;
     private JComboBox HospitalSystemList;
     private JList RequestsBox;
-    private JButton UpdateListBtn;
+    private JButton UpdateListButton;
 }
