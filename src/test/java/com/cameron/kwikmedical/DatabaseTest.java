@@ -53,4 +53,16 @@ public class DatabaseTest {
         Integer testNHSNumber = 1234567899;
         Assertions.assertEquals(testNHSNumber, database.DBRetrievePatientDetails(testNHSNumber).getNhsNumber());
     }
+
+    /**
+     * Query the database and return all hospital requests for the specified hospital
+     * Confirm that the method returns an array list containing the correct hospital requests
+     */
+    @Test
+    void DBRetrieveAllHospitalRequests() {
+        // Hospital "Glasgow Road Hospital" used for testing
+        String hospitalName = "Glasgow Road Hospital";
+        // Expected size is 1 as there is only one request for the test hospital
+        Assertions.assertEquals(1, database.DBRetrieveHospitalRequests(hospitalName).size());
+    }
 }
