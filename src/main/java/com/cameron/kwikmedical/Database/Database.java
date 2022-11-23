@@ -30,20 +30,19 @@ public class Database {
             // Setting up PreparedStatement to query DB
             String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            int nhsNum = Integer.parseInt(nhsNumber);
-            preparedStatement.setInt(1, nhsNum);
+            preparedStatement.setString(1, nhsNumber);
 
             // Execute query and store in result set
             ResultSet results = preparedStatement.executeQuery();
 
-            Integer nhsNumberOutput = 0;
+            String nhsNumberOutput = "";
             if(results.next())
-                 nhsNumberOutput = results.getInt(2);
+                 nhsNumberOutput = results.getString(2);
             System.out.println(nhsNumberOutput);
             // Closing DB connection and statement
             TerminateDB();
             preparedStatement.close();
-            return nhsNumberOutput.equals(Integer.parseInt(nhsNumber));
+            return nhsNumberOutput.equals(nhsNumber);
         } catch (Exception err) {
             System.out.println("Error with Database: " + err.getMessage());
         }
