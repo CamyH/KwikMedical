@@ -32,7 +32,7 @@ public class KwikMedical extends JFrame {
             if (NHSNumberOperator.getText().equals("") || pName.getText().equals("") || AddressBox.getText().equals("") || MedicalCondBox.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name.");
             } else if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
-                    JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
+                    JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found. Callout Created");
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     PatientDetails patient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBSendDetailsToHospital(requestedHospital, patient, true);
