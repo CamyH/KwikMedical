@@ -54,8 +54,6 @@ public class KwikMedical extends JFrame {
                     AddressBox.setText("");
                     MedicalCondBox.setText("");
                 }
-
-
         });
 
         SubmitButton.addActionListener(e -> {
