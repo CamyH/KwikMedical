@@ -29,7 +29,7 @@ public class KwikMedical extends JFrame {
          * If Patient does not exist, add new patient to database, then generate ambulance request and send details to that Hospital
          */
         PatientSearch.addActionListener(e -> {
-            if (NHSNumberOperator.getText().equals("") || pName.getText().equals("")) {
+            if (NHSNumberOperator.getText().equals("") || pName.getText().equals("") || AddressBox.getText().equals("") || MedicalCondBox.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name.");
             } else if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
                     JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
