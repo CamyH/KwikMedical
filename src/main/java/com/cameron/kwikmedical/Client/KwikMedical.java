@@ -42,7 +42,7 @@ public class KwikMedical extends JFrame {
                     AddressBox.setText("");
                     MedicalCondBox.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database.");
+                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database. Callout Created");
                     // Adding new patient to Database before generating ambulance request and sending to hospital
                     PatientDetails newPatient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBInsertPatientDetails(newPatient);
