@@ -69,7 +69,7 @@ public class KwikMedical extends JFrame {
 
             // Insert details into DB
             new Database().DBInsertCallOutDetails(nhsNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
-            JOptionPane.showMessageDialog(null, "Call Out Details Updated");
+            JOptionPane.showMessageDialog(null, "Call Out Details Updated and Request Removed");
             // Clear input boxes
             nhsNumberBox.setText("");
             fullNameBox.setText("");
