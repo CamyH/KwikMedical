@@ -4,7 +4,7 @@ package com.cameron.kwikmedical.Business;
  * Class for storing Request details
  */
 public class HospitalRequest {
-    public HospitalRequest(String hospitalName, String hospitalAddress, String patientName, Integer nHSNumber, String patientAddress, String medicalCond, Boolean ambulanceSent) {
+    public HospitalRequest(String hospitalName, String hospitalAddress, String patientName, String nHSNumber, String patientAddress, String medicalCond, Boolean ambulanceSent) {
         this.hospitalName = hospitalName;
         this.hospitalAddress = hospitalAddress;
         this.patientName = patientName;
@@ -17,7 +17,7 @@ public class HospitalRequest {
     private String hospitalName;
     private String hospitalAddress;
     private String patientName;
-    private Integer nHSNumber;
+    private String nHSNumber;
     private String patientAddress;
     private String medicalCond;
     private Boolean ambulanceSent;
@@ -46,11 +46,11 @@ public class HospitalRequest {
         this.patientName = patientName;
     }
 
-    public Integer getnHSNumber() {
+    public String getnHSNumber() {
         return nHSNumber;
     }
 
-    public void setnHSNumber(Integer nHSNumber) {
+    public void setnHSNumber(String nHSNumber) {
         this.nHSNumber = nHSNumber;
     }
 

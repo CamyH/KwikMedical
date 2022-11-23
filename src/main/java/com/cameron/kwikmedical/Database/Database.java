@@ -165,7 +165,7 @@ public class Database {
             ArrayList<HospitalRequest> allRequests = new ArrayList<>();
             while (results.next()) {
                 HospitalRequest request = new HospitalRequest(results.getString("HospitalName"), results.getString("HospitalAddress"), results.getString("PatientName"),
-                        results.getInt("NHSNumber"), results.getString("PatientAddress")
+                        results.getString("NHSNumber"), results.getString("PatientAddress")
                         , results.getString("MedicalCond"), results.getBoolean("AmbulanceSent"));
                 allRequests.add(request);
             }
@@ -212,7 +212,7 @@ public class Database {
             // Setting up PreparedStatement to insert patient details into DB
             String query = "INSERT INTO CallOutDetails (NHSNumber, PatientName, TimeOfIncident, LocationOfIncident, TimeSpentOnCall, ActionTaken, IncidentReport) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, Integer.parseInt(nhsNumber));
+            preparedStatement.setString(1, nhsNumber);
             preparedStatement.setString(2, fullName);
             preparedStatement.setTime(3, Time.valueOf(timeOfIncident));
             preparedStatement.setString(4, locationOfIncident);
@@ -224,12 +224,19 @@ public class Database {
             String patientDetailsQuery = "UPDATE PatientDetails SET MedicalCond = ? WHERE NHSNumber = ?";
             PreparedStatement preparedStatementPatient = conn.prepareStatement(patientDetailsQuery);
             preparedStatementPatient.setString(1, actionTaken);
-            preparedStatementPatient.setInt(2, Integer.parseInt(nhsNumber));
+            preparedStatementPatient.setString(2, nhsNumber);
+
+            // PreparedStatement to remove pending request from hospital system
+            String removeRequestQuery = "DELETE FROM HospitalSystem WHERE NHSNumber = ?";
+            PreparedStatement prepareStatementRequest = conn.prepareStatement(removeRequestQuery);
+            prepareStatementRequest.setString(1, nhsNumber);
 
             // Execute insertion query
             preparedStatement.execute();
             // Execute update query
             preparedStatementPatient.executeUpdate();
+            // Execute delete query
+            prepareStatementRequest.executeUpdate();
 
             // Closing DB connection and statement
             TerminateDB();
