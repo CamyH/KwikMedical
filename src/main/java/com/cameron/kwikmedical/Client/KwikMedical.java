@@ -34,16 +34,25 @@ public class KwikMedical extends JFrame {
             } else if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
                     JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found");
                     Hospital requestedHospital = GenerateAmbulanceRequest();
-                    PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
+                    PatientDetails patient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBSendDetailsToHospital(requestedHospital, patient, true);
+                    // Clear input boxes
+                    NHSNumberOperator.setText("");
+                    pName.setText("");
+                    AddressBox.setText("");
+                    MedicalCondBox.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database.");
                     // Adding new patient to Database before generating ambulance request and sending to hospital
-                    PatientDetails patient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
-                    new Database().DBInsertPatientDetails(patient);
+                    PatientDetails newPatient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
+                    new Database().DBInsertPatientDetails(newPatient);
                     Hospital requestedHospital = GenerateAmbulanceRequest();
-                    PatientDetails newPatient = new PatientDetails(pName.getText(), Integer.parseInt(NHSNumberOperator.getText()), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBSendDetailsToHospital(requestedHospital, newPatient, true);
+                    // Clear input boxes
+                    NHSNumberOperator.setText("");
+                    pName.setText("");
+                    AddressBox.setText("");
+                    MedicalCondBox.setText("");
                 }
 
 
@@ -62,6 +71,15 @@ public class KwikMedical extends JFrame {
 
             // Insert details into DB
             new Database().DBInsertCallOutDetails(nhsNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
+            JOptionPane.showMessageDialog(null, "Call Out Details Updated");
+            // Clear input boxes
+            nhsNumberBox.setText("");
+            fullNameBox.setText("");
+            TimeOfIncidentBox.setText("");
+            incidentLocation.setText("");
+            timeSpentBox.setText("");
+            actionTakenBox.setText("");
+            incidentReportBox.setText("");
         });
 
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
@@ -69,6 +87,7 @@ public class KwikMedical extends JFrame {
 
         UpdateListButton.addActionListener(e -> {
             PopulateRequestsBox();
+            JOptionPane.showMessageDialog(null, "Requests Updated");
         });
     }
     private void PopulateHospitalLists() {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Class for setting the patient details when they use the system
  */
 public class PatientDetails {
-    public PatientDetails(String pFullName, Integer nhsNumber, String address, String medicalCond) {
+    public PatientDetails(String pFullName, String nhsNumber, String address, String medicalCond) {
         this.pFullName = pFullName;
         this.nhsNumber = nhsNumber;
         this.address = address;
@@ -16,7 +16,7 @@ public class PatientDetails {
     private final ArrayList<PatientDetails> patientDetails = new ArrayList<>();
 
     private String pFullName;
-    private Integer nhsNumber;
+    private String nhsNumber;
     private String address;
     private String medicalCond;
 
@@ -36,11 +36,11 @@ public class PatientDetails {
         this.pFullName = pFirstName;
     }
 
-    public Integer getNhsNumber() {
+    public String getNhsNumber() {
         return nhsNumber;
     }
 
-    public void setNhsNumber(Integer nhsNumber) {
+    public void setNhsNumber(String nhsNumber) {
         this.nhsNumber = nhsNumber;
     }
 

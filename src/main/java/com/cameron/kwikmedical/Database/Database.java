@@ -36,9 +36,9 @@ public class Database {
             // Execute query and store in result set
             ResultSet results = preparedStatement.executeQuery();
 
-
-            results.next();
-            Integer nhsNumberOutput = results.getInt(2);
+            Integer nhsNumberOutput = 0;
+            if(results.next())
+                 nhsNumberOutput = results.getInt(2);
             System.out.println(nhsNumberOutput);
             // Closing DB connection and statement
             TerminateDB();
@@ -53,7 +53,7 @@ public class Database {
     public void DBInsertPatientDetails(PatientDetails patient) {
         try {
             String fullName = patient.getpFullName();
-            Integer nhsNumber = patient.getNhsNumber();
+            String nhsNumber = patient.getNhsNumber();
             String address = patient.getAddress();
             String medicalCond = patient.getMedicalCond();
             // Connecting to DB
@@ -62,7 +62,7 @@ public class Database {
             String query = "INSERT INTO PatientDetails (FullName, NHSNumber, Address, MedicalCond) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, fullName);
-            preparedStatement.setInt(2, nhsNumber);
+            preparedStatement.setString(2, nhsNumber);
             preparedStatement.setString(3, address);
             preparedStatement.setString(4, medicalCond);
 
@@ -91,7 +91,7 @@ public class Database {
             PatientDetails patient = null;
             while (results.next()) {
                 patient = new PatientDetails(results.getString("FullName"),
-                        results.getInt("NHSNumber"), results.getString("Address")
+                        results.getString("NHSNumber"), results.getString("Address")
                         , results.getString("MedicalCond"));
             }
 
@@ -137,7 +137,7 @@ public class Database {
             preparedStatement.setString(1, hospital.getName());
             preparedStatement.setString(2, hospital.getAddress());
             preparedStatement.setString(3, patient.getpFullName());
-            preparedStatement.setInt(4, patient.getNhsNumber());
+            preparedStatement.setString(4, patient.getNhsNumber());
             preparedStatement.setString(5, patient.getAddress());
             preparedStatement.setString(6, patient.getMedicalCond());
             preparedStatement.setBoolean(7, ambulanceSent);
