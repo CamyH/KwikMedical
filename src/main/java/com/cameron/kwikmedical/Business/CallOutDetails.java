@@ -8,13 +8,13 @@ import java.time.LocalTime;
 public class CallOutDetails {
     public CallOutDetails(String NHSNumber, String patientName, LocalTime timeOfIncident, String locationOfIncident, Integer timeSpentOnCall, String actionTaken, String incidentReport, String hospitalName) {
         this.NHSNumber = NHSNumber;
-        PatientName = patientName;
-        TimeOfIncident = timeOfIncident;
-        LocationOfIncident = locationOfIncident;
-        TimeSpentOnCall = timeSpentOnCall;
-        ActionTaken = actionTaken;
-        IncidentReport = incidentReport;
-        HospitalName = hospitalName;
+        this.PatientName = patientName;
+        this.TimeOfIncident = timeOfIncident;
+        this.LocationOfIncident = locationOfIncident;
+        this.TimeSpentOnCall = timeSpentOnCall;
+        this.ActionTaken = actionTaken;
+        this.IncidentReport = incidentReport;
+        this.HospitalName = hospitalName;
     }
 
     private String NHSNumber;
