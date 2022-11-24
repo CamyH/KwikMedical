@@ -44,7 +44,7 @@ public class Database {
             preparedStatement.close();
             return nhsNumberOutput.equals(nhsNumber);
         } catch (Exception err) {
-            System.out.println("Error with Database: " + err.getMessage());
+            System.out.println("Error checking patient exists: " + err.getMessage());
         }
         return false;
     }
@@ -105,6 +105,7 @@ public class Database {
         return null;
     }
 
+    // Only used if wanting to add a new hospital to database
     public void DBAddHospital(String name, String address) {
         try {
             // Connecting to DB

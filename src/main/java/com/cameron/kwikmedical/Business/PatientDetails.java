@@ -13,26 +13,16 @@ public class PatientDetails {
         this.medicalCond = medicalCond;
     }
 
-    private final ArrayList<PatientDetails> patientDetails = new ArrayList<>();
-
     private String pFullName;
     private String nhsNumber;
     private String address;
     private String medicalCond;
 
-    public ArrayList<PatientDetails> getPatientDetails() {
-        return patientDetails;
-    }
-
-    public void setpFullName(PatientDetails details) {
-        this.patientDetails.add(details);
-    }
-
     public String getpFullName() {
         return pFullName;
     }
 
-    public void set(String pFirstName) {
+    public void setpFullName(String pFirstName) {
         this.pFullName = pFirstName;
     }
 

@@ -70,19 +70,19 @@ public class KwikMedical extends JFrame {
             // Check the patient exists before adding a new row to the callout details table
             if (new Database().DBCheckIfPatientExists(NHSNumberBox.getText())) {
                 // Insert details into DB
-                new Database().DBInsertCallOutDetails(NHSNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
+                new Database().DBInsertCallOutDetails(NHSNumberBox.getText(), FullNameBox.getText(), timeOfIncident, IncidentLocation.getText(), TimeSpentBox.getText(), ActionTakenBox.getText(), IncidentReportBox.getText());
                 JOptionPane.showMessageDialog(null, "Call Out Details Updated and Request Removed");
             } else {
                 JOptionPane.showMessageDialog(null, "NHS Number does not exist. Try again.");
             }
             // Clear input boxes
             NHSNumberBox.setText("");
-            fullNameBox.setText("");
+            FullNameBox.setText("");
             TimeOfIncidentBox.setText("");
-            incidentLocation.setText("");
-            timeSpentBox.setText("");
-            actionTakenBox.setText("");
-            incidentReportBox.setText("");
+            IncidentLocation.setText("");
+            TimeSpentBox.setText("");
+            ActionTakenBox.setText("");
+            IncidentReportBox.setText("");
         });
 
         // If the Hospital Tab is selected, the hospital drop down is populated from the DB
@@ -134,12 +134,12 @@ public class KwikMedical extends JFrame {
     private JButton PatientSearch;
     private JComboBox HospitalList;
     private JTextField NHSNumberBox;
-    private JTextField fullNameBox;
-    private JTextArea incidentReportBox;
+    private JTextField FullNameBox;
+    private JTextArea IncidentReportBox;
     private JTextField TimeOfIncidentBox;
-    private JTextField incidentLocation;
-    private JTextArea actionTakenBox;
-    private JTextField timeSpentBox;
+    private JTextField IncidentLocation;
+    private JTextArea ActionTakenBox;
+    private JTextField TimeSpentBox;
     private JButton SubmitButton;
     private JTextField AddressBox;
     private JTextField MedicalCondBox;

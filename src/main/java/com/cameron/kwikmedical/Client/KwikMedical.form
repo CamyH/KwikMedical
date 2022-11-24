@@ -217,7 +217,7 @@
                       <text value="Location of Incident:"/>
                     </properties>
                   </component>
-                  <component id="bc1fa" class="javax.swing.JTextField" binding="incidentLocation">
+                  <component id="bc1fa" class="javax.swing.JTextField" binding="IncidentLocation">
                     <constraints>
                       <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -233,7 +233,7 @@
                       <text value="Time Spent on Call:"/>
                     </properties>
                   </component>
-                  <component id="d6ff0" class="javax.swing.JTextField" binding="timeSpentBox">
+                  <component id="d6ff0" class="javax.swing.JTextField" binding="TimeSpentBox">
                     <constraints>
                       <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -270,7 +270,7 @@
                       <text value="Incident Report:"/>
                     </properties>
                   </component>
-                  <component id="b3a0b" class="javax.swing.JTextArea" binding="incidentReportBox">
+                  <component id="b3a0b" class="javax.swing.JTextArea" binding="IncidentReportBox">
                     <constraints>
                       <grid row="4" column="9" row-span="2" col-span="1" vsize-policy="6" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
@@ -278,7 +278,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="73948" class="javax.swing.JTextField" binding="fullNameBox">
+                  <component id="73948" class="javax.swing.JTextField" binding="FullNameBox">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -302,7 +302,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="5dd6c" class="javax.swing.JTextArea" binding="actionTakenBox">
+                  <component id="5dd6c" class="javax.swing.JTextArea" binding="ActionTakenBox">
                     <constraints>
                       <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="50"/>
