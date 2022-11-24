@@ -2,6 +2,8 @@ package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,32 +30,40 @@ public class KwikMedical extends JFrame {
          * If Patient Exists, Generate ambulance request and send details to that Hospital
          * If Patient does not exist, add new patient to database, then generate ambulance request and send details to that Hospital
          */
-        PatientSearch.addActionListener(e -> {
+        CreateRequestButton.addActionListener(e -> {
             if (NHSNumberOperator.getText().equals("") || pName.getText().equals("") || AddressBox.getText().equals("") || MedicalCondBox.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Please enter the NHS Number and Patient Name.");
+                JOptionPane.showMessageDialog(null, "Please fill out all the boxes to create a callout request.");
             } else if(new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
-                    JOptionPane.showMessageDialog(null, "Patient " + pName.getText() + " Found. Callout Created");
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     PatientDetails patient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBSendDetailsToHospital(requestedHospital, patient, true);
+                    JOptionPane.showMessageDialog(null, "Callout Created, sent to Hospital: " + requestedHospital);
                     // Clear input boxes
                     NHSNumberOperator.setText("");
                     pName.setText("");
                     AddressBox.setText("");
                     MedicalCondBox.setText("");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database. Callout Created");
                     // Adding new patient to Database before generating ambulance request and sending to hospital
                     PatientDetails newPatient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBInsertPatientDetails(newPatient);
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     new Database().DBSendDetailsToHospital(requestedHospital, newPatient, true);
+                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database. Callout Created, sent to Hospital: " + requestedHospital);
                     // Clear input boxes
                     NHSNumberOperator.setText("");
                     pName.setText("");
                     AddressBox.setText("");
                     MedicalCondBox.setText("");
                 }
+        });
+
+        SearchForPatientButton.addActionListener(e -> {
+            if (NHSNumberOperator.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid NHS Number to check if a patient exists.");
+            } else if (new Database().DBCheckIfPatientExists(NHSNumberOperator.getText())) {
+                JOptionPane.showMessageDialog(null, "Patient found.");
+            }
         });
 
         SubmitButton.addActionListener(e -> {
@@ -131,7 +141,7 @@ public class KwikMedical extends JFrame {
     private JLabel CallDetails;
     private JTextField NHSNumberOperator;
     private JTextField pName;
-    private JButton PatientSearch;
+    private JButton CreateRequestButton;
     private JComboBox HospitalList;
     private JTextField NHSNumberBox;
     private JTextField FullNameBox;
@@ -147,4 +157,5 @@ public class KwikMedical extends JFrame {
     private JComboBox HospitalSystemList;
     private JList RequestsBox;
     private JButton UpdateListButton;
+    private JButton SearchForPatientButton;
 }
