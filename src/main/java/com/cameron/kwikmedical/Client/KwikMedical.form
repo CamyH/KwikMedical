@@ -310,7 +310,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="34d32" class="javax.swing.JTextField" binding="nhsNumberBox">
+                  <component id="34d32" class="javax.swing.JTextField" binding="NHSNumberBox">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>

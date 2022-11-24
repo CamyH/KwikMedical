@@ -67,11 +67,16 @@ public class KwikMedical extends JFrame {
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid time. (HH:MM)");
 
-            // Insert details into DB
-            new Database().DBInsertCallOutDetails(nhsNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
-            JOptionPane.showMessageDialog(null, "Call Out Details Updated and Request Removed");
+            // Check the patient exists before adding a new row to the callout details table
+            if (new Database().DBCheckIfPatientExists(NHSNumberBox.getText())) {
+                // Insert details into DB
+                new Database().DBInsertCallOutDetails(NHSNumberBox.getText(), fullNameBox.getText(), timeOfIncident, incidentLocation.getText(), timeSpentBox.getText(), actionTakenBox.getText(), incidentReportBox.getText());
+                JOptionPane.showMessageDialog(null, "Call Out Details Updated and Request Removed");
+            } else {
+                JOptionPane.showMessageDialog(null, "NHS Number does not exist. Try again.");
+            }
             // Clear input boxes
-            nhsNumberBox.setText("");
+            NHSNumberBox.setText("");
             fullNameBox.setText("");
             TimeOfIncidentBox.setText("");
             incidentLocation.setText("");
@@ -128,7 +133,7 @@ public class KwikMedical extends JFrame {
     private JTextField pName;
     private JButton PatientSearch;
     private JComboBox HospitalList;
-    private JTextField nhsNumberBox;
+    private JTextField NHSNumberBox;
     private JTextField fullNameBox;
     private JTextArea incidentReportBox;
     private JTextField TimeOfIncidentBox;

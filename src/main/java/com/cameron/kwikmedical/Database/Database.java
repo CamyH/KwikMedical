@@ -76,14 +76,14 @@ public class Database {
         }
     }
 
-    public PatientDetails DBRetrievePatientDetails(Integer nhsNumber) {
+    public PatientDetails DBRetrievePatientDetails(String nhsNumber) {
         try {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to retrieve patient details from DB
             String query = "SELECT * FROM PatientDetails WHERE NHSNumber LIKE ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setInt(1, nhsNumber);
+            preparedStatement.setString(1, nhsNumber);
 
             // Execute insertion query
             ResultSet results = preparedStatement.executeQuery();

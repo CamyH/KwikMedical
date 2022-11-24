@@ -48,7 +48,7 @@ public class DatabaseTest {
     @Test
     void DBRetrievePatientDetails() {
         // NHS Number for patient "James Bond" used for testing
-        Integer testNHSNumber = 1234567899;
+        String testNHSNumber = "1234567899";
         Assertions.assertEquals(testNHSNumber, database.DBRetrievePatientDetails(testNHSNumber).getNhsNumber());
     }
 
