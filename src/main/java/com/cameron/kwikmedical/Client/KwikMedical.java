@@ -1,13 +1,13 @@
 package com.cameron.kwikmedical.Client;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.cameron.kwikmedical.Business.CallOutDetails;
 import com.cameron.kwikmedical.Business.HospitalRequest;
 import com.cameron.kwikmedical.Business.PatientDetails;
 import com.cameron.kwikmedical.Database.Database;
@@ -37,7 +37,7 @@ public class KwikMedical extends JFrame {
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     PatientDetails patient = new PatientDetails(pName.getText(), NHSNumberOperator.getText(), AddressBox.getText(), MedicalCondBox.getText());
                     new Database().DBSendDetailsToHospital(requestedHospital, patient, true);
-                    JOptionPane.showMessageDialog(null, "Callout Created, sent to Hospital: " + requestedHospital);
+                    JOptionPane.showMessageDialog(null, "Callout Created, sent to Hospital: " + requestedHospital.getName());
                     // Clear input boxes
                     NHSNumberOperator.setText("");
                     pName.setText("");
@@ -79,8 +79,9 @@ public class KwikMedical extends JFrame {
 
             // Check the patient exists before adding a new row to the callout details table
             if (new Database().DBCheckIfPatientExists(NHSNumberBox.getText())) {
+                String hospitalName = new Database().DBReturnHospitalName(NHSNumberBox.getText());
                 // Insert details into DB
-                new Database().DBInsertCallOutDetails(NHSNumberBox.getText(), FullNameBox.getText(), timeOfIncident, IncidentLocation.getText(), TimeSpentBox.getText(), ActionTakenBox.getText(), IncidentReportBox.getText());
+                new Database().DBInsertCallOutDetails(NHSNumberBox.getText(), FullNameBox.getText(), timeOfIncident, IncidentLocation.getText(), TimeSpentBox.getText(), ActionTakenBox.getText(), IncidentReportBox.getText(), hospitalName);
                 JOptionPane.showMessageDialog(null, "Call Out Details Updated and Request Removed");
             } else {
                 JOptionPane.showMessageDialog(null, "NHS Number does not exist. Try again.");
@@ -101,6 +102,10 @@ public class KwikMedical extends JFrame {
         UpdateListButton.addActionListener(e -> {
             PopulateRequestsBox();
             JOptionPane.showMessageDialog(null, "Requests Updated");
+        });
+
+        UpdateCallOutsButton.addActionListener(e -> {
+            PopulateCallOutBox();
         });
     }
     private void PopulateHospitalLists() {
@@ -125,6 +130,24 @@ public class KwikMedical extends JFrame {
             requestModel.addElement("Ambulance Sent: " + request.getAmbulanceSent());
         }
         RequestsBox.setModel(requestModel);
+    }
+
+    private void PopulateCallOutBox() {
+        String hospitalName = HospitalSystemList.getSelectedItem().toString();
+        DefaultListModel callOutModel = new DefaultListModel<>();
+        ArrayList<CallOutDetails> allCallouts = new Database().DBRetrieveCallOutDetails(hospitalName);
+        callOutModel.clear();
+        for (CallOutDetails callout : allCallouts) {
+            callOutModel.addElement("Hospital Name: " + callout.getHospitalName());
+            callOutModel.addElement("NHS Number: " + callout.getNHSNumber());
+            callOutModel.addElement("Patient Name: " + callout.getPatientName());
+            callOutModel.addElement("Time of Incident: " + callout.getTimeOfIncident());
+            callOutModel.addElement("Location of Incident: " + callout.getLocationOfIncident());
+            callOutModel.addElement("Time Spent on Call: " + callout.getTimeSpentOnCall());
+            callOutModel.addElement("Action Taken: " + callout.getActionTaken());
+            callOutModel.addElement("Incident Report: " + callout.getIncidentReport());
+        }
+        CallOutBox.setModel(callOutModel);
     }
 
     private Hospital GenerateAmbulanceRequest() {
@@ -158,4 +181,6 @@ public class KwikMedical extends JFrame {
     private JList RequestsBox;
     private JButton UpdateListButton;
     private JButton SearchForPatientButton;
+    private JList CallOutBox;
+    private JButton UpdateCallOutsButton;
 }

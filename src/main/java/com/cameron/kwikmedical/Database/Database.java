@@ -181,6 +181,58 @@ public class Database {
         return null;
     }
 
+    public ArrayList<CallOutDetails> DBRetrieveCallOutDetails(String hospitalName) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            // Setting up PreparedStatement to get call out details for specific NHS Number from DB
+            String query = "SELECT * FROM CallOutDetails WHERE HospitalName LIKE ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, hospitalName);
+            // Execute selection query
+            ResultSet results = preparedStatement.executeQuery();
+            ArrayList<CallOutDetails> allCallOuts = new ArrayList<>();
+            while (results.next()) {
+                CallOutDetails callout = new CallOutDetails(results.getString("NHSNumber"), results.getString("PatientName"), results.getTime("TimeOfIncident").toLocalTime()
+                        , results.getString("LocationOfIncident"), results.getInt("TimeSpentOnCall"), results.getString("ActionTaken"), results.getString("IncidentReport"),
+                        results.getString("HospitalName"));
+                allCallOuts.add(callout);
+            }
+
+            //String hospitalNameDB = DBReturnHospitalName(NHSNumber);
+
+            // Closing DB connection and statement
+            TerminateDB();
+            preparedStatement.close();
+            return allCallOuts;
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        return null;
+    }
+
+    public String DBReturnHospitalName(String NHSNumber) {
+        try {
+            // Connecting to DB
+            DBConnection();
+            String hospitalName = "";
+            // Setting up PreparedStatement to grab request for the NHSNumber
+            // This will allow for the HospitalName to be found to filter the call-out details
+            String query = "SELECT * FROM HospitalSystem WHERE NHSNumber LIKE ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, NHSNumber);
+            // Execute selection query
+            ResultSet requestResults = preparedStatement.executeQuery();
+            while (requestResults.next()) {
+                hospitalName = requestResults.getString("HospitalName");
+            }
+            return hospitalName;
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+        return null;
+    }
+
     public ArrayList<Hospital> DBRetrieveAllHospitals() {
         try {
             // Connecting to DB
@@ -206,12 +258,12 @@ public class Database {
         return null;
     }
 
-    public void DBInsertCallOutDetails(String nhsNumber, String fullName, LocalTime timeOfIncident, String locationOfIncident, String timeSpentOnCall, String actionTaken, String incidentReport) {
+    public void DBInsertCallOutDetails(String nhsNumber, String fullName, LocalTime timeOfIncident, String locationOfIncident, String timeSpentOnCall, String actionTaken, String incidentReport, String hospitalName) {
         try {
             // Connecting to DB
             DBConnection();
             // Setting up PreparedStatement to insert patient details into DB
-            String query = "INSERT INTO CallOutDetails (NHSNumber, PatientName, TimeOfIncident, LocationOfIncident, TimeSpentOnCall, ActionTaken, IncidentReport) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO CallOutDetails (NHSNumber, PatientName, TimeOfIncident, LocationOfIncident, TimeSpentOnCall, ActionTaken, IncidentReport, HospitalName) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, nhsNumber);
             preparedStatement.setString(2, fullName);
@@ -220,6 +272,7 @@ public class Database {
             preparedStatement.setInt(5, Integer.parseInt(timeSpentOnCall));
             preparedStatement.setString(6, actionTaken);
             preparedStatement.setString(7, incidentReport);
+            preparedStatement.setString(8, hospitalName);
 
             // PreparedStatement to update patient's medical condition
             String patientDetailsQuery = "UPDATE PatientDetails SET MedicalCond = ? WHERE NHSNumber = ?";
