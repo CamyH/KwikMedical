@@ -49,7 +49,7 @@ public class KwikMedical extends JFrame {
                     new Database().DBInsertPatientDetails(newPatient);
                     Hospital requestedHospital = GenerateAmbulanceRequest();
                     new Database().DBSendDetailsToHospital(requestedHospital, newPatient, true);
-                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database. Callout Created, sent to Hospital: " + requestedHospital);
+                    JOptionPane.showMessageDialog(null, "Patient does not exist, new patient added to database. Callout Created, sent to Hospital: " + requestedHospital.getName());
                     // Clear input boxes
                     NHSNumberOperator.setText("");
                     pName.setText("");
